@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////
 //   Project : Gesture Controlled Robot
 //   File  : MainWindow.xaml.cs
 //   Class : MainWindow
@@ -22,7 +22,7 @@
 // This module contains code to do Kinect NUI initialization and
 // processing and also to display NUI streams on screen.
 //
-// Copyright © Microsoft Corporation.  All rights reserved.  
+// Copyright ï¿½ Microsoft Corporation.  All rights reserved.  
 // This code is licensed under the terms of the 
 // Microsoft Kinect for Windows SDK (Beta) from Microsoft Research 
 // License Agreement: http://research.microsoft.com/KinectSDK-ToU
@@ -70,7 +70,7 @@ namespace SkeletalViewer
             {
                 MessageBox.Show("Error opening serial port for communication.", e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
             this.state = false;
             this.clapStarted = false;
         }
@@ -78,16 +78,16 @@ namespace SkeletalViewer
 
         #region Variables for initialization of Kinect
         Runtime nui;
-        
+
         int lastFrames = 0;
         int framediff = 30;
         int totalFrames = 10;
         double initangle = 0;
         double curangle = 0;
-        int aflag=0;
+        int aflag = 0;
         int lim = 10;
         int send;
-        int curx=0;
+        int curx = 0;
         DateTime lastTime = DateTime.MaxValue;
         double rprevz;
         char s = '0';
@@ -139,9 +139,9 @@ namespace SkeletalViewer
 
         public struct str
         {
-            public double x,y,z;
-              
-            
+            public double x, y, z;
+
+
         };
 
         // TEAM 16_2011
@@ -168,7 +168,7 @@ namespace SkeletalViewer
         public double zvar;
 
 
-        int p=0;
+        int p = 0;
         int fck = 10;
         int fcktemp = 0;
         double thresh = 40;
@@ -181,7 +181,7 @@ namespace SkeletalViewer
         public int r_is = 0;
         public int r_ds = 0;
 
-        public int mode=0;
+        public int mode = 0;
 
 
 
@@ -236,7 +236,7 @@ namespace SkeletalViewer
             {
                 nui.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
                 nui.DepthStream.Open(ImageStreamType.Depth, 2, ImageResolution.Resolution320x240, ImageType.DepthAndPlayerIndex);
-                
+
             }
             catch (InvalidOperationException)
             {
@@ -327,19 +327,19 @@ namespace SkeletalViewer
             //++totalFrames;
 
             DateTime cur = DateTime.Now;
-           /* if (cur.Subtract(lastTime) > TimeSpan.FromSeconds(1))
-            {
-                int frameDiff = totalFrames - lastFrames;
-                lastFrames = totalFrames;
-                lastTime = cur;
-                // frameRate.Text = frameDiff.ToString() + " fps by team 16";
-            }
-            * /
-            /*
-            */
-            str r_we=diff(r_wrist, r_elbow);
+            /* if (cur.Subtract(lastTime) > TimeSpan.FromSeconds(1))
+             {
+                 int frameDiff = totalFrames - lastFrames;
+                 lastFrames = totalFrames;
+                 lastTime = cur;
+                 // frameRate.Text = frameDiff.ToString() + " fps by team 16";
+             }
+             * /
+             /*
+             */
+            str r_we = diff(r_wrist, r_elbow);
             str r_es = diff(r_elbow, r_shldr);
-            str r_se = diff(r_shldr,r_elbow);
+            str r_se = diff(r_shldr, r_elbow);
             str mid = diff(shldr_center, hip_center);
             str pln = diff(r_shldr, l_shldr);
             str r_wc = diff(shldr_center, r_wrist);
@@ -351,7 +351,7 @@ namespace SkeletalViewer
             str l_se = diff(l_shldr, l_elbow);
             str l_wc = diff(shldr_center, l_wrist);
             str l_hw = diff(l_hand, l_wrist);
-            
+
 
 
             str r_pt;
@@ -360,25 +360,25 @@ namespace SkeletalViewer
             str l_pt;
             l_pt = l_wrist;
             l_pt.x = l_shldr.x;
-            str r_req=diff(r_shldr,r_pt);
-            str l_req=diff(l_shldr,l_pt);
+            str r_req = diff(r_shldr, r_pt);
+            str l_req = diff(l_shldr, l_pt);
             zin1 = angle(shldr_center, sl_sr);
             zin2 = angle(shldr_center, r_se);
-            
+
             //double zvar = angle(shldr_center, r_es);
 
             double rx1 = angle(r_we, r_es);
             double rx2 = angle(r_es, mid);
-            
-            double rx3 = angle(r_se,r_we);
+
+            double rx3 = angle(r_se, r_we);
             double rx4 = angle(r_wc, pln);
-            double rx5 = angle(r_wc,mid);
+            double rx5 = angle(r_wc, mid);
             double rx6 = angle(sl_sr, r_se);
             double rx8 = angle(r_we, mid);
             double rx7 = angle(r_we, pln);
             double rx9 = angle(r_es, pln);
             double rx10 = angle(r_req, mid);
-            
+
 
 
 
@@ -393,7 +393,7 @@ namespace SkeletalViewer
             double lx7 = angle(l_we, pln);
             double lx9 = angle(l_es, pln);
             double lx10 = angle(l_req, mid);
-            
+
             //rm_fwd=c1(x1, x2+90,rm_fwd,1,zin1-zin2);
             //rm_bck = c1(x1, x2 + 90, rm_bck, -1,zin1-zin2);
             //rm_start = c1(x1,x2+90,rm_start,-1,Math.Abs(x9-90));
@@ -402,9 +402,9 @@ namespace SkeletalViewer
             //r_rot = c1(x5 - 90, x4, r_rot, 1,0);
             //r_is = mv(x7 - 90, x8 - 90, r_wrist, r_is, -1);
             //r_rot = mv(x7 - 90, x8 - 90, r_wrist, r_rot, 1);
-           //this.semaphore1.Text = "mv : 1st arg = " +  (x7-90)+" 2rd arg = " + (x8-90) ;
-           //this.semaphore2.Text = "r_mv = "+ r_is.ToString();
-           //this.semaphore3.Text = "zdiff = " + (r_wrist.z - hip_center.z);
+            //this.semaphore1.Text = "mv : 1st arg = " +  (x7-90)+" 2rd arg = " + (x8-90) ;
+            //this.semaphore2.Text = "r_mv = "+ r_is.ToString();
+            //this.semaphore3.Text = "zdiff = " + (r_wrist.z - hip_center.z);
 
 
             this.semaphore1.Text = "rx 2,9 :" + rx2 + " " + rx9 + " ";
@@ -413,16 +413,16 @@ namespace SkeletalViewer
             this.semaphore4.Text = "lx 7,3 : " + lx7 + " " + lx3;
             this.semaphore5.Text = "rx 8,lx 8 : " + rx8 + " " + lx8;
             //DECIDING THE MODE
-            
-            if (check(rx2 - 90, rx9, rx7 - 90, rx8 )==1 )
+
+            if (check(rx2 - 90, rx9, rx7 - 90, rx8) == 1)
             {
                 //WHEN BOTH LEFT AND RIGHT HANDS ARE IN POSITION AS REQUIRED (GRIPPER MODE)
                 mode = 3;
-               lastFrames = 0;
+                lastFrames = 0;
                 char x = (char)mode;
                 this.serialPort.Write(x.ToString());
             }
-            else if (check(rx2 - 90, rx9 - 90, rx7 - 90, rx8 ) == 1)
+            else if (check(rx2 - 90, rx9 - 90, rx7 - 90, rx8) == 1)
             {
                 //WHEN RIGHT HAND IS IN POSITION (LONG RANGE MODE)
                 mode = 1;
@@ -430,7 +430,7 @@ namespace SkeletalViewer
                 char x = (char)mode;
                 this.serialPort.Write(x.ToString());
             }
-            else if (check(lx2 - 90, lx9 - 90, lx7 - 90, lx8 ) == 1)
+            else if (check(lx2 - 90, lx9 - 90, lx7 - 90, lx8) == 1)
             {
                 //WHEN LEFT HAND IS IN POSTION (FINE CONTROL MODE)
                 mode = 2;
@@ -442,7 +442,7 @@ namespace SkeletalViewer
             {
                 //lastFrames=0;
             }
-            this.semaphore.Text = "MODE : " + mode;            
+            this.semaphore.Text = "MODE : " + mode;
             //WHEN IN MODE 1 i.e. long range motion (* put if condition)
 
             if (mode == 1)
@@ -452,22 +452,22 @@ namespace SkeletalViewer
                 {
                     //COMMUNICATE SIGNAL CORRESPONDING TO THIS
                     this.semaphore.Text = "IN MODE 1 FORWARD MOTION DETECTED";
-                    char x=(char)8;
+                    char x = (char)8;
                     this.serialPort.Write(x.ToString());
                     lastFrames = 0;
                 }
 
                 //FOR STOP
-                else if (check(rx2, rx9 - 90, rx7 - 90, rx8 ) == 1)
+                else if (check(rx2, rx9 - 90, rx7 - 90, rx8) == 1)
                 {
                     //STOP
                     this.semaphore.Text = "STOP";
-                    char x=(char)5;
+                    char x = (char)5;
                     this.serialPort.Write(x.ToString());
                     lastFrames = 0;
                 }
 
-                else if (check(rx2-180, rx9 - 90, rx3 - 90, rx7 - 90) == 1 && check(lx2-180, lx9 - 90, lx3 - 90, lx7 - 90) == 1)
+                else if (check(rx2 - 180, rx9 - 90, rx3 - 90, rx7 - 90) == 1 && check(lx2 - 180, lx9 - 90, lx3 - 90, lx7 - 90) == 1)
                 {
                     //BACK
                     this.semaphore.Text = "BACK";
@@ -476,7 +476,7 @@ namespace SkeletalViewer
                     lastFrames = 0;
                 }
                 //ANGLE ROTATION
-                else if (check(rx2 - 90,0, rx3-180, rx8 - 90) == 1)
+                else if (check(rx2 - 90, 0, rx3 - 180, rx8 - 90) == 1)
                 {
                     //SEND ANGLE BETWEEN HAND AND PLN
                     curangle = rx9;
@@ -485,12 +485,12 @@ namespace SkeletalViewer
                         initangle = curangle;
                     }
                     lastFrames++;
-                    
-                    this.semaphore.Text = "IN MODE 1 ANGLE DETECTION : " + send +" s : "+s.ToString();
+
+                    this.semaphore.Text = "IN MODE 1 ANGLE DETECTION : " + send + " s : " + s.ToString();
                     if (lastFrames >= totalFrames)
                     {
 
-                         
+
                         send = -(Convert.ToInt32(curangle) - Convert.ToInt32(initangle));
                         if (send < 10 && send > -10)
                         {
@@ -501,18 +501,18 @@ namespace SkeletalViewer
                             send = 45 - send;
                         }
                         send += 10;
-                       
+
                         s = (char)send;
-                        
+
                         this.serialPort.Write(s.ToString());
                         lastFrames = 0;
-                        
+
                     }
-                    
+
                 }
                 else
                 {
-                    lastFrames = 0;   
+                    lastFrames = 0;
                 }
             }
 
@@ -527,8 +527,8 @@ namespace SkeletalViewer
             }
             //WHEN IN MODE 3
             else if (mode == 3)
-            {   
-                if (check(rx3 - 180,0, 0, 0) == 1 && check(lx3 - 180, 0, 0, 0) == 1)
+            {
+                if (check(rx3 - 180, 0, 0, 0) == 1 && check(lx3 - 180, 0, 0, 0) == 1)
                 {
                     lastFrames++;
                     //RETURN rx10,lx10;
@@ -536,15 +536,17 @@ namespace SkeletalViewer
                     if (lastFrames >= totalFrames)
                     {
                         lastFrames = 0;
+                        if (rx10 > 90) rx10 = 90;
                         int send = Convert.ToInt32(rx10 * (9.0 / 10) + 30);
-                            
+
                         char x = (char)send;
                         this.serialPort.Write(x.ToString());
+                        if (rx9 > 90) rx9 = 90;
                         send = Convert.ToInt32(rx9 * (4.0 / 9) + 80);
                         x = (char)send;
                         this.serialPort.Write(x.ToString());
                     }
-                    this.semaphore.Text = "IN MODE 3 : rx9,10"+rx9+" "+rx10;
+                    this.semaphore.Text = "IN MODE 3 : rx9,10" + rx9 + " " + rx10;
                 }
             }
         }
@@ -552,21 +554,21 @@ namespace SkeletalViewer
         //angles constant ew,bodyline 90 ; we,sline 90 /
         //returns +1 if positive motion -1 if -ve motion 0 if no motion 2 if future possibility of motion
 
-        public int checkmotion(double a1,double a2)
+        public int checkmotion(double a1, double a2)
         {
             lastFrames++;
             if (a1 < 20 && a2 < 20)
             {
                 double temp = Math.Abs(r_wrist.z - rprevz);
-                this.semaphore2.Text = "tempval: " + temp+" "+"prevval: "+rprevz;
+                this.semaphore2.Text = "tempval: " + temp + " " + "prevval: " + rprevz;
                 if (lastFrames >= totalFrames)
                 {
                     lastFrames = 0;
                     fcktemp++;
-                    
+
                     if (temp > thresh)
                     {
-                        rprevz = r_wrist.z;    
+                        rprevz = r_wrist.z;
                         return 1;
                     }
                     else if (temp < -thresh)
@@ -587,11 +589,11 @@ namespace SkeletalViewer
                 return curx;
             }
             return 0;
-            
+
         }
 
         // checks if 3 angles are less around 0 -- returns 1 if true and 0 if false
-        public int check(double a1,double a2,double a3,double a4)
+        public int check(double a1, double a2, double a3, double a4)
         {
             if (Math.Abs(a1) < thresh && Math.Abs(a2) < thresh && Math.Abs(a3) < thresh && Math.Abs(a4) < thresh)
                 return 1;
@@ -599,27 +601,27 @@ namespace SkeletalViewer
         }
 
         //passing by reference in c## ?? to set time
-        public int c1(double atemp1,double atemp2, int flag, int dir,double z)
+        public int c1(double atemp1, double atemp2, int flag, int dir, double z)
         {
             //this.semaphore.Text = "in c1 , flag = " + flag.ToString()+" dir = "+ dir.ToString();
-            
-            int inval=flag;
+
+            int inval = flag;
             DateTime curtime = DateTime.Now;
-            if (atemp1 < 20  && atemp2 < 130 && atemp2 > 80 && z<40)
+            if (atemp1 < 20 && atemp2 < 130 && atemp2 > 80 && z < 40)
             {
                 if (dir == 1)
                 {
-                    
+
                     inval = 1;
-                
+
                 }
-                else if (flag == 2 && z< 20)
+                else if (flag == 2 && z < 20)
                 {
-                    
-                    inval = 3; 
+
+                    inval = 3;
                 }
             }
-            else if (atemp1 < 20  && atemp2 < 160 && atemp2 > 130 && z<40)
+            else if (atemp1 < 20 && atemp2 < 160 && atemp2 > 130 && z < 40)
             {
                 if (dir == 1 && flag == 1)
                 {
@@ -630,17 +632,17 @@ namespace SkeletalViewer
                 {
                     inval = 2;
                 }
-               
+
             }
-            else if ( atemp1 < 20 && atemp2 > 160 && z<40)
+            else if (atemp1 < 20 && atemp2 > 160 && z < 40)
             {
                 if (dir == 1 && flag == 2)
                 {
                     inval = 3;
                 }
-                else 
+                else
                 {
-                    
+
                     inval = 1;
                 }
             }
@@ -651,9 +653,9 @@ namespace SkeletalViewer
             double nor = Math.Sqrt(s1.x * s1.x + s1.y * s1.y + s1.z * s1.z);
             return (s1.x * s2.x + s1.y * s2.y + s1.z * s2.z) / nor;
         }
-        public int mv(double a1,double a2,str c,int flag,int dir)
+        public int mv(double a1, double a2, str c, int flag, int dir)
         {
-           // this.semaphore3.Text = "in mv  :zdiff = " + dir * (c.z-prev.z) ;
+            // this.semaphore3.Text = "in mv  :zdiff = " + dir * (c.z-prev.z) ;
             int inval = flag;
             double tempval = Math.Abs(c.z - hip_center.z);
             if (a1 < 40 && a2 < 40 && tempval < 0.14)
@@ -665,19 +667,19 @@ namespace SkeletalViewer
                     inval = 3;
                 }
             }
-            if (a1 < 40 && a2 < 40  && tempval <0.23 && tempval >0.15) 
+            if (a1 < 40 && a2 < 40 && tempval < 0.23 && tempval > 0.15)
             {
-                if (dir == -1 && flag ==1)
+                if (dir == -1 && flag == 1)
                 { inval = 2; }
                 else if (flag == 1)
                 {
                     inval = 2;
                 }
-                
+
             }
             if (a1 < 40 && a2 < 40 && tempval > 0.23)
             {
-                if (dir == -1  && flag ==2)
+                if (dir == -1 && flag == 2)
                 { inval = 3; }
                 else
                 {
@@ -701,7 +703,7 @@ namespace SkeletalViewer
             double sum = x1.x * x2.x + x1.y * x2.y + x1.z * x2.z;
             double n1 = Math.Sqrt(x1.x * x1.x + x1.y * x1.y + x1.z * x1.z);
             double n2 = Math.Sqrt(x2.x * x2.x + x2.y * x2.y + x2.z * x2.z);
-            sum = Math.Acos(sum / (n1 * n2))*180/Math.PI;
+            sum = Math.Acos(sum / (n1 * n2)) * 180 / Math.PI;
             return sum;
 
         }
@@ -798,7 +800,7 @@ namespace SkeletalViewer
                             r_wrist.x = joint.Position.X;
                             r_wrist.y = joint.Position.Y;
                             r_wrist.z = joint.Position.Z;
-                          
+
                         }
                         if (joint.ID == JointID.ElbowRight)
                         {
@@ -814,7 +816,7 @@ namespace SkeletalViewer
                             r_shldr.z = joint.Position.Z;
 
                         }
-   
+
                         if (joint.ID == JointID.HandRight)
                         {
                             r_hand.x = joint.Position.X;
@@ -879,7 +881,7 @@ namespace SkeletalViewer
         {
             nui.Uninitialize();
             // Close the serial port.
-            
+
             try
             {
                 this.serialPort.Close();
@@ -902,6 +904,6 @@ namespace SkeletalViewer
 
         }
 
-        
+
     }
 }
